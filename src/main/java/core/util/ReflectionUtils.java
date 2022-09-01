@@ -96,4 +96,11 @@ public class ReflectionUtils {
             .flatMap(it -> reflections.getTypesAnnotatedWith(it).stream())
             .collect(Collectors.toSet());
     }
+
+    public static Set<Method> getMethodsAnnotatedWith(final Set<Class<?>> configurationClasses, final Class<? extends Annotation>... annotations) {
+        return configurationClasses.stream()
+            .flatMap(it -> Arrays.stream(it.getDeclaredMethods()))
+            .filter(it -> Arrays.stream(annotations).anyMatch(it::isAnnotationPresent))
+            .collect(Collectors.toSet());
+    }
 }
